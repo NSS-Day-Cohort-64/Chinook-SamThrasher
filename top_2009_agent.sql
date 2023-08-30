@@ -2,10 +2,13 @@
 
 HINT: Use the MAX function on a subquery. */
 
-SELECT SUM(total) AS total_sales, employee.FirstName, employee.LastName
-FROM invoice
-JOIN customer ON invoice.CustomerId = customer.CustomerId
-JOIN employee ON customer.SupportRepId = employee.EmployeeId
-GROUP BY employee.EmployeeId
-ORDER BY total_sales DESC
+SELECT e.firstName, e.lastName, SUM(i.total) AS total 
+FROM employee e
+INNER JOIn customer c
+ON e.employeeID = c.SupportRepId
+INNER JOIN invoice i
+ON c.customerID = i.customerID
+WHERE i.invoiceDate LIKE '2009%'
+GROUP BY e.employeeID
+ORDER BY total DESC
 LIMIT 1;
